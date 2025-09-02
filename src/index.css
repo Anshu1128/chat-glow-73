@@ -2,41 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Dark Chat Application Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark chat theme colors */
+    --background: 220 13% 8%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 13% 11%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 13% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 217 91% 60%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 13% 14%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 13% 14%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 20%;
+    --input: 220 13% 16%;
+    --ring: 217 91% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Chat-specific colors */
+    --chat-bubble-user: 217 91% 60%;
+    --chat-bubble-other: 220 13% 16%;
+    --chat-sidebar: 220 13% 6%;
+    --chat-online: 142 71% 45%;
+    --chat-away: 48 100% 67%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(230 91% 65%));
+    --gradient-background: linear-gradient(135deg, hsl(220 13% 8%), hsl(220 13% 6%));
+    --gradient-message-glow: linear-gradient(135deg, hsl(217 91% 60% / 0.1), hsl(230 91% 65% / 0.1));
+    
+    /* Shadows */
+    --shadow-glow: 0 0 20px hsl(217 91% 60% / 0.3);
+    --shadow-message: 0 2px 8px hsl(220 13% 4% / 0.4);
+    --shadow-elevated: 0 4px 16px hsl(220 13% 4% / 0.6);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +119,61 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-background);
+  }
+}
+
+@layer components {
+  /* Chat Message Bubbles */
+  .message-bubble-user {
+    @apply bg-primary text-primary-foreground rounded-2xl rounded-br-md px-4 py-2 max-w-[80%] shadow-md;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-message);
+  }
+  
+  .message-bubble-other {
+    @apply rounded-2xl rounded-bl-md px-4 py-2 max-w-[80%] shadow-md;
+    background: hsl(var(--chat-bubble-other));
+    color: hsl(var(--foreground));
+    box-shadow: var(--shadow-message);
+  }
+
+  /* Chat Input */
+  .chat-input {
+    @apply bg-input border-border text-foreground rounded-full px-4 py-3 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300;
+    box-shadow: var(--shadow-message);
+  }
+
+  /* Sidebar */
+  .chat-sidebar {
+    background: hsl(var(--chat-sidebar));
+    box-shadow: var(--shadow-elevated);
+  }
+
+  /* Online Status */
+  .status-online {
+    @apply w-3 h-3 rounded-full;
+    background: hsl(var(--chat-online));
+    box-shadow: 0 0 6px hsl(var(--chat-online) / 0.6);
+  }
+  
+  .status-away {
+    @apply w-3 h-3 rounded-full;
+    background: hsl(var(--chat-away));
+    box-shadow: 0 0 6px hsl(var(--chat-away) / 0.6);
+  }
+
+  /* Animations */
+  .message-enter {
+    @apply animate-[slideInMessage_0.3s_ease-out];
+  }
+  
+  .typing-indicator {
+    @apply animate-[pulse_1.5s_ease-in-out_infinite];
+  }
+
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: var(--shadow-glow);
   }
 }
